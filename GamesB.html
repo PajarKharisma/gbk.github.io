@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games</title>
+    <link href="style.css" rel="stylesheet">
+    <link href="bootstrap.min.css" rel="stylesheet">
+    <script src="bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(function () {
+            /* 
+            batu = 0
+            kertas = 1
+            gunting = 2
+             */
+
+            function hideResult(){
+                $('#vs').removeAttr('hidden');
+                $('#menang').attr('hidden', true);
+                $('#imbang').attr('hidden', true);
+                $('#kalah').attr('hidden', true);
+            }
+
+            function randomChoice(user_choice){
+                hideResult();
+                let comp_choice = Math.floor(Math.random() * 3);
+                let result = '';
+                switch (comp_choice) {
+                    case 0:
+                        $('#comp_batu').addClass('btn-light');
+                        $('#comp_kertas').removeClass('btn-light');
+                        $('#comp_gunting').removeClass('btn-light');
+
+                        switch (user_choice) {
+                            case 0:
+                                result = 'MENANG';
+                            break;
+
+                            case 1:
+                                result = 'IMBANG';
+                            break;
+
+                            case 2:
+                                result = 'KALAH';
+                            break;
+                        }
+                    break;
+                
+                    case 1:
+                        $('#comp_kertas').addClass('btn-light');
+                        $('#comp_batu').removeClass('btn-light');
+                        $('#comp_gunting').removeClass('btn-light');
+
+                        switch (user_choice) {
+                            case 0:
+                                result = 'KALAH';
+                            break;
+
+                            case 1:
+                                result = 'IMBANG';
+                            break;
+
+                            case 2:
+                                result = 'MENANG';
+                            break;
+                        }
+                    break;
+
+                    case 2:
+                        $('#comp_gunting').addClass('btn-light');
+                        $('#comp_kertas').removeClass('btn-light');
+                        $('#comp_batu').removeClass('btn-light');
+
+                        switch (user_choice) {
+                            case 0:
+                                result = 'MENANG';
+                            break;
+
+                            case 1:
+                                result = 'KALAH';
+                            break;
+
+                            case 2:
+                                result = 'IMBANG';
+                            break;
+                        }
+                    break;
+                }
+                switch (result) {
+                    case 'MENANG':
+                        $('#menang').removeAttr('hidden');
+                        $('#imbang').attr('hidden');
+                        $('#kalah').attr('hidden');
+                    break;
+
+                    case 'IMBANG':
+                        $('#imbang').removeAttr('hidden');
+                        $('#menang').attr('hidden');
+                        $('#kalah').attr('hidden');
+                    break;
+
+                    case 'KALAH':
+                        $('#kalah').removeAttr('hidden');
+                        $('#imbang').attr('hidden');
+                        $('#menang').attr('hidden');
+                    break;
+                }
+                $('#vs').attr('hidden', true);
+            }
+
+            $('#refresh').on('click', function (e) {
+                e.preventDefault();
+                $('#batu').removeClass('btn-light');
+                $('#kertas').removeClass('btn-light');
+                $('#gunting').removeClass('btn-light');
+
+                $('#comp_batu').removeClass('btn-light');
+                $('#comp_kertas').removeClass('btn-light');
+                $('#comp_gunting').removeClass('btn-light');
+
+                hideResult();
+            })
+
+            $('#batu').on('click', function (e) {
+                e.preventDefault();
+                $('#batu').addClass('btn-light');
+                $('#kertas').removeClass('btn-light');
+                $('#gunting').removeClass('btn-light');
+
+                randomChoice(0);
+            })
+
+            $('#kertas').on('click', function (e) {
+                e.preventDefault();
+                $('#kertas').addClass('btn-light');
+                $('#batu').removeClass('btn-light');
+                $('#gunting').removeClass('btn-light');
+
+                randomChoice(1);
+            })
+
+            $('#gunting').on('click', function (e) {
+                e.preventDefault();
+                $('#gunting').addClass('btn-light');
+                $('#kertas').removeClass('btn-light');
+                $('#batu').removeClass('btn-light');
+
+                randomChoice(2);
+            })
+        })
+    </script>
+</head>
+<body>
+    <div class="container">
+        <br>
+        <div class="row">
+            <div class="col-1">
+                <button id="back" type="button" class="btn"> 
+                    <b><span style="color: #724C21; font-size: 36px;"> < </span></b>
+                </button>
+            </div>
+            <div class="col-1">
+                <img src="assets/logo.png" class="float-start" alt="" width="72" height="72">
+            </div>
+            <div class="col-8">
+                <b><span style="color: #F9B23D; font-size: 36px;"> ROCK PAPER SCISSORS </span></b>
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="row text-center">
+            <div class="col-5">
+                <h1>PLAYER 1</h1><br><br>
+                <button id="batu" type="button" class="btn">
+                    <img src="assets/batu.png" alt="" width="128" height="92">
+                </button>
+                <br><br><br>
+                <button id="kertas" type="button" class="btn">
+                    <img src="assets/kertas.png" alt="" width="115" height="150">
+                </button>
+                <br><br><br>
+                <button id="gunting" type="button" class="btn">
+                    <img src="assets/gunting.png" alt="" width="134" height="160">
+                </button>
+            </div>
+            <div class="col-2 align-self-center" id="report">
+                <b id="vs"><span style="color: #BD0000; font-size: 42px;">VS</span></b>
+                <img hidden id="menang" src="assets/win.png" alt="" width="200">
+                <img hidden id="kalah" src="assets/lose.png" alt="" width="200">
+                <img hidden id="imbang" src="assets/draw.png" alt="" width="200">
+            </div>
+            <div class="col-5">
+                <h1>COM</h1><br><br>
+                <button id="comp_batu" type="button" class="btn">
+                    <img src="assets/batu.png" alt="" width="128" height="92">
+                </button>
+                <br><br><br>
+                <button id="comp_kertas" type="button" class="btn">
+                    <img src="assets/kertas.png" alt="" width="115" height="150">
+                </button>
+                <br><br><br>
+                <button id="comp_gunting" type="button" class="btn">
+                    <img src="assets/gunting.png" alt="" width="134" height="160">
+                </button>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col">
+                <br><br>
+                <button id="refresh" type="button" class="btn">
+                    <img src="assets/refresh.png" alt="" width="77" height="71">
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
